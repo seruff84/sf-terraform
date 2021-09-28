@@ -1,0 +1,11 @@
+#cloud-config
+users:
+  - name: seruff
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCZ7CRAnlYHd1l7UEfoimDpXSVPZh5+E3uPkaY2OE8ceSL1LntQ4oA7SL4/mVpnLZDQ8cVeCzYrDhCz4nZhv2a9FUy6eOpcHx5MzunJwWUcMv7JeGHZttor5XOAqAubLLIfzpwwCAvMPimIKXxK4PJom+DVo6H9AGL3GAct/LphJd8D0JxWmUSMtKLvmcYnj/mj5ItHZM8JvrJlTMRVHlKRHP1E6Pn9V93DgaBxsCfyx3rUF9NyFnrjY/bHRuX1ooxKi2ZUSzBuFJe6ILkhBot0LaXlR0IL4dxLi4syupOphKf84fPt404ToS4CrLZ9ArnJtmgCL/Y8+6hDC3HPaQlZ drobot@Ubuntu-Desktop
+  - name: root
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCZ7CRAnlYHd1l7UEfoimDpXSVPZh5+E3uPkaY2OE8ceSL1LntQ4oA7SL4/mVpnLZDQ8cVeCzYrDhCz4nZhv2a9FUy6eOpcHx5MzunJwWUcMv7JeGHZttor5XOAqAubLLIfzpwwCAvMPimIKXxK4PJom+DVo6H9AGL3GAct/LphJd8D0JxWmUSMtKLvmcYnj/mj5ItHZM8JvrJlTMRVHlKRHP1E6Pn9V93DgaBxsCfyx3rUF9NyFnrjY/bHRuX1ooxKi2ZUSzBuFJe6ILkhBot0LaXlR0IL4dxLi4syupOphKf84fPt404ToS4CrLZ9ArnJtmgCL/Y8+6hDC3HPaQlZ drobot@Ubuntu-Desktop

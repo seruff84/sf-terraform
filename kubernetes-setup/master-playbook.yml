@@ -1,0 +1,28 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+  - name: initialize the cluster
+    shell: kubeadm init --control-plane-endpoint={{ hostvars[inventory_hostname]['inventory_hostname']}} --apiserver-cert-extra-sans={{ hostvars[inventory_hostname]['inventory_hostname']}}  --node-name k8s-master --pod-network-cidr=192.168.10.0/24
+  
+  - name: Setup kubeconfig for seruff1 user
+    command: "{{ item }}"
+    with_items:
+     - cp -i /etc/kubernetes/admin.conf /tmp/config
+     - chown seruff:seruff /tmp/config
+
+  - name: Fetch kube config 
+    ansible.builtin.fetch:
+      src: /tmp/config
+      dest: ~/.kube/config
+      flat: yes
+  - name: Delete temp config
+    shell: /bin/rm -rf /tmp/config
+
+  - name: Generate join command
+    command: kubeadm token create --print-join-command
+    register: join_command
+
+  - name: Copy join command to local file
+    local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"
