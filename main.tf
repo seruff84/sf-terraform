@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "yandex" {
-  token     = "AQAAAAARJlzzAATuwR3zAUB7cUU3pjwCWHjuw8s"
+  token     = var.yc_token
   cloud_id  = "b1giech89svtpr2sgq4c"
   folder_id = "b1gkk6na84ph4jq1hi38"
   zone      = "ru-central1-a"
@@ -17,16 +17,16 @@ resource "yandex_compute_instance" "vm-1" {
   name = "sf-kube-1"
 
   resources {
-    cores         = 2
-    memory        = 2
+    cores         = 4
+    memory        = 4
     core_fraction = 20
 
   }
 
   boot_disk {
     initialize_params {
-      image_id = "fd83klic6c8gfgi40urb"
-      size     = 4
+      image_id = "fd869u2laf181s38k2cr"
+      size     = 6
     }
   }
 
@@ -64,16 +64,16 @@ resource "yandex_compute_instance" "vm-2" {
   name = "sf-kube-2"
 
   resources {
-    cores         = 2
-    memory        = 2
+    cores         = 4
+    memory        = 4
     core_fraction = 20
 
   }
 
   boot_disk {
     initialize_params {
-      image_id = "fd83klic6c8gfgi40urb"
-      size     = 4
+      image_id = "fd869u2laf181s38k2cr"
+      size     = 6
     }
   }
 

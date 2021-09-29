@@ -1,0 +1,1 @@
+variable "yc_token" {}

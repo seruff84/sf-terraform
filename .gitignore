@@ -1,5 +1,7 @@
 terraform.tfstate
 terraform.tfstate.backup
 main.tf.save
+.terraform.lock.hcl 
 /kubernetes-setup/home/
 /.terraform
+terraform.tfvars

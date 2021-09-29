@@ -3,6 +3,7 @@
   become: yes
   become_user: root
   tasks:
+
   - name: Install packages that allow apt to be used over HTTPS
     apt:
       name: "{{ packages }}"
@@ -41,7 +42,36 @@
     user:
       name: seruff
       group: docker
+  - name: Creates directory
+    file:
+      path: /etc/systemd/system/docker.service.d
+      state: directory
+
+  - name: Create daemon json config file
+    copy:
+      dest: /etc/docker/daemon.json
+      content: |
+        {
+          "exec-opts": ["native.cgroupdriver=systemd"],
+          "log-driver": "json-file",
+          "log-opts": {
+            "max-size": "100m"
+          },
+          "storage-driver": "overlay2"
+        }
   
+  - name: restart docker
+    service:
+      name: docker
+      daemon_reload: yes    
+      state: restarted
+    
+  - name: enable  docker                    
+    systemd:
+      name: docker
+      state: started
+      enabled: yes 
+
   - name: Remove swapfile from /etc/fstab
     mount:
       name: "{{ item }}"
@@ -83,13 +113,8 @@
       daemon_reload: yes
       state: restarted
 
-  - name: Configure kubelet EXTRA_ARGS
-    copy:
-      dest: /etc/default/kubelet
-      content: KUBELET_EXTRA_ARGS="--cgroup-driver=cgroupfs"
+#  - name: Configure kubelet EXTRA_ARGS
+#    copy:
+#      dest: /etc/default/kubelet
+#      content: KUBELET_EXTRA_ARGS="--cgroup-driver=cgroupfs"
 
-  - name: Restart kubelet
-    service:
-      name: kubelet
-      daemon_reload: yes
-      state: restarted
