@@ -20,6 +20,13 @@
   - name: Delete temp config
     shell: /bin/rm -rf /tmp/config
 
+  - name: Download file and force basic auth
+    local_action: get_url url=https://docs.projectcalico.org/manifests/calico.yaml dest=./
+
+  - name: install network plugin
+    become: no
+    local_action: command kubectl apply -f ./calico.yaml
+
   - name: Generate join command
     command: kubeadm token create --print-join-command
     register: join_command

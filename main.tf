@@ -17,16 +17,16 @@ resource "yandex_compute_instance" "vm-1" {
   name = "sf-kube-1"
 
   resources {
-    cores         = 2
-    memory        = 2
+    cores         = var.yc_cores
+    memory        = var.yc_memory
     core_fraction = 20
 
   }
 
   boot_disk {
     initialize_params {
-      image_id = "fd81hgrcv6lsnkremf32"
-      size     = 4
+      image_id = var.yc_imageid
+      size     = var.yc_disk_size
     }
   }
 
@@ -64,16 +64,16 @@ resource "yandex_compute_instance" "vm-2" {
   name = "sf-kube-2"
 
   resources {
-    cores         = 2
-    memory        = 2
+    cores         = var.yc_cores
+    memory        = var.yc_memory
     core_fraction = 20
 
   }
 
   boot_disk {
     initialize_params {
-      image_id = "fd81hgrcv6lsnkremf32"
-      size     = 4
+      image_id = var.yc_imageid
+      size     = var.yc_disk_size
     }
   }
 
@@ -100,12 +100,14 @@ resource "yandex_compute_instance" "vm-2" {
   provisioner "local-exec" {
     command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u seruff -i '${yandex_compute_instance.vm-2.network_interface.0.nat_ip_address},' --private-key ~/.ssh/id_rsa -e 'pub_key=~/.ssh/id_rsa.pub' ~/projects/learn-terraform/kubernetes-setup/node-playbook.yml"
   }
+
   provisioner "local-exec" {
     command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u seruff -i '${yandex_compute_instance.vm-2.network_interface.0.nat_ip_address},' --private-key ~/.ssh/id_rsa -e 'pub_key=~/.ssh/id_rsa.pub' ~/projects/learn-terraform/kubernetes-setup/slave-playbook.yml"
   }
-  provisioner "local-exec" {
-    command = "kubectl apply -f  https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml"
-  }
+
+#  provisioner "local-exec" {
+#    command = "kubectl apply -f  https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml"
+#  }
 
 }
 

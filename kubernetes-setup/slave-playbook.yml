@@ -3,7 +3,7 @@
   become: yes
   become_user: root
   tasks:
-  - name: wait for join-command
+  - name: Wait for join-command
     local_action: wait_for path=./join-command
 
   - name: Copy the join command to server location
@@ -11,3 +11,6 @@
 
   - name: Join the node to cluster
     command: sh /tmp/join-command.sh
+
+  - name: Remove join file
+    local_action: file path=./join-command state=absent
