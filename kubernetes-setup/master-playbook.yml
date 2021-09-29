@@ -4,7 +4,7 @@
   become_user: root
   tasks:
   - name: initialize the cluster
-    shell: kubeadm init --control-plane-endpoint={{ hostvars[inventory_hostname]['inventory_hostname']}} --apiserver-cert-extra-sans={{ hostvars[inventory_hostname]['inventory_hostname']}}  --node-name k8s-master --pod-network-cidr=192.168.10.0/24
+    shell: kubeadm init --control-plane-endpoint={{hostvars[inventory_hostname]['inventory_hostname']}} --apiserver-cert-extra-sans={{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}  --node-name k8s-master --pod-network-cidr=192.168.10.0/24
   
   - name: Setup kubeconfig for seruff1 user
     command: "{{ item }}"

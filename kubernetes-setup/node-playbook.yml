@@ -17,6 +17,45 @@
       - gnupg-agent
       - software-properties-common
 
+  - name: modprobe overlay
+    modprobe:
+      name: overlay
+      state: present
+
+  - name: modprobe br_netfilter
+    modprobe:
+      name: br_netfilter
+      state: present
+
+
+  - name: Configure kubelet EXTRA_ARGS
+    copy:
+      dest: /etc/sysctl.d/kubernetes.conf
+      content: |
+        net.bridge.bridge-nf-call-ip6tables = 1
+        net.bridge.bridge-nf-call-iptables = 1
+        net.ipv4.ip_forward = 1
+
+  - name: net.bridge.bridge-nf-call-ip6tables
+    sysctl:
+      name: net.bridge.bridge-nf-call-ip6tables
+      value: 1
+      state: present
+      reload: yes
+
+  - name: net.bridge.bridge-nf-call-iptables
+    sysctl:
+      name: net.bridge.bridge-nf-call-iptables
+      value: 1
+      state: present
+      reload: yes
+
+  - name: net.ipv4.ip_forward
+    sysctl:
+      name: net.ipv4.ip_forward
+      value: 1
+      state: present
+      reload: yes
   - name: Add an apt signing key for Docker
     apt_key:
       url: https://download.docker.com/linux/ubuntu/gpg
@@ -113,8 +152,8 @@
       daemon_reload: yes
       state: restarted
 
-#  - name: Configure kubelet EXTRA_ARGS
-#    copy:
-#      dest: /etc/default/kubelet
-#      content: KUBELET_EXTRA_ARGS="--cgroup-driver=cgroupfs"
-
+  - name: Add IP address of all hosts to all hosts
+    lineinfile:
+      dest: /etc/hosts
+      line: "{{ hostvars[inventory_hostname]['inventory_hostname']}} k8-master"
+      state: present

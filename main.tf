@@ -17,16 +17,16 @@ resource "yandex_compute_instance" "vm-1" {
   name = "sf-kube-1"
 
   resources {
-    cores         = 4
-    memory        = 4
+    cores         = 2
+    memory        = 2
     core_fraction = 20
 
   }
 
   boot_disk {
     initialize_params {
-      image_id = "fd869u2laf181s38k2cr"
-      size     = 6
+      image_id = "fd81hgrcv6lsnkremf32"
+      size     = 4
     }
   }
 
@@ -64,16 +64,16 @@ resource "yandex_compute_instance" "vm-2" {
   name = "sf-kube-2"
 
   resources {
-    cores         = 4
-    memory        = 4
+    cores         = 2
+    memory        = 2
     core_fraction = 20
 
   }
 
   boot_disk {
     initialize_params {
-      image_id = "fd869u2laf181s38k2cr"
-      size     = 6
+      image_id = "fd81hgrcv6lsnkremf32"
+      size     = 4
     }
   }
 
