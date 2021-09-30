@@ -105,9 +105,9 @@ resource "yandex_compute_instance" "vm-2" {
     command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u seruff -i '${yandex_compute_instance.vm-2.network_interface.0.nat_ip_address},' --private-key ~/.ssh/id_rsa -e 'pub_key=~/.ssh/id_rsa.pub' ~/projects/learn-terraform/kubernetes-setup/slave-playbook.yml"
   }
 
-#  provisioner "local-exec" {
-#    command = "kubectl apply -f  https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml"
-#  }
+  provisioner "local-exec" {
+    command = "kubectl apply -f  https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml"
+  }
 
 }
 
