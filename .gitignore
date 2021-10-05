@@ -5,3 +5,4 @@ main.tf.save
 /kubernetes-setup/home/
 /.terraform
 terraform.tfvars
+worklog

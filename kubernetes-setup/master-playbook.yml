@@ -3,6 +3,10 @@
   become: yes
   become_user: root
   tasks:
+
+  - name: Remove join file
+    local_action: file path=./join-command state=absent
+
   - name: initialize the cluster
     shell: kubeadm init --control-plane-endpoint={{hostvars[inventory_hostname]['inventory_hostname']}} --apiserver-cert-extra-sans={{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}  --node-name k8s-master --pod-network-cidr=172.24.10.0/24
   
@@ -27,10 +31,10 @@
   - name: Copy join command to local file
     local_action: copy content="{{ join_command.stdout_lines[0] }}" dest="./join-command"
 
-  - name: Download file and force basic auth
-    local_action: get_url url=https://docs.projectcalico.org/manifests/calico.yaml dest=./
-
-  - name: install network plugin
-    become: no
-    local_action: command kubectl apply -f ./calico.yaml
+#  - name: Download file and force basic auth
+#    local_action: get_url url=https://docs.projectcalico.org/manifests/calico.yaml dest=./
+#
+#  - name: install network plugin
+#    become: no
+#    local_action: command kubectl apply -f ./calico.yaml
 

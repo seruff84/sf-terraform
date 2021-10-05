@@ -12,5 +12,3 @@
   - name: Join the node to cluster
     command: sh /tmp/join-command.sh
 
-  - name: Remove join file
-    local_action: file path=./join-command state=absent

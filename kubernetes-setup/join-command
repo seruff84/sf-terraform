@@ -1,0 +1,1 @@
+kubeadm join 178.154.220.197:6443 --token fmmeun.nmoir173rfas9amo --discovery-token-ca-cert-hash sha256:abf0939b3879b12eb18d050a133a242cf3d0d1f74b09ff25030e229c33c1fd4e 
